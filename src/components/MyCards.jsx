@@ -1,5 +1,20 @@
 import "../css/welcome.css";
+import React from "react";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import { fetchAlbums } from "../redux/actions/action";
+
+import SongCard from "./Single";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+
 export default function MyCards() {
+  const dispatch = useDispatch();
+  const albumDisplay = useSelector((state) => state.getAlbums.albumList);
+  useEffect(() => {
+    dispatch(fetchAlbums());
+  }, []);
   return (
     <div id="col-10" className="pl-5">
       <div className="row">
@@ -46,36 +61,13 @@ export default function MyCards() {
       {/*Cards*/}
       <div className="row mt-3 scrollit">
         <div className="row" id="cardstart">
-          <h1 className="col-12 mb-4">Good Morning</h1>
+          <h3 className="col-12 mb-4">Good Morning</h3>
           <div className="col-3">
             <a href="/#">
-              <div className="sidecards col-2">
-                <img className="col-4" src alt="" />
-                <p className="col-8 sidetext" />
-              </div>
+              {albumDisplay.map((song) => (
+                <SongCard song={song} />
+              ))}
             </a>
-          </div>
-        </div>
-        <div className="row pl-3 mt-3" id="mainrow">
-          <h2 className="col-12 ml-3 mb-4">Recently Played</h2>
-          <div className="col-12 pl-3 row" id="firstAlbumRow">
-            <div className="albumCard">
-              <img className="col-11" src alt="" />
-              <div className="albumText">
-                <p>Artist</p>
-                <p>Song</p>
-              </div>
-            </div>
-          </div>
-          <h2 className="ml-3 mb-4 mt-5">Artists to Try</h2>
-          <div className="col-md-8 col-lg-12 pl-3 row" id="secondAlbumRow">
-            <div className="albumCard">
-              <img className="col-11" src alt="" />
-              <div className="albumText">
-                <p>Artist</p>
-                <p id="podcast-hook">Check out talented artists!</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 export const GET_ARTIST = "ADD_ARTIST";
 export const GET_ALBUM = "ADD_ALBUM";
 export const SAVE_VALUE = "SAVE_VALUE";
-const fetchAlbums = (endpoint) => {
+export const fetchAlbums = (endpoint) => {
   const baseEndpoint =
     "https://striveschool-api.herokuapp.com/api/deezer/search?q=bushido";
   return async (dispatch, getState) => {
