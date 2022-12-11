@@ -1,6 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./components/Main";
 import Search from "./components/Search";

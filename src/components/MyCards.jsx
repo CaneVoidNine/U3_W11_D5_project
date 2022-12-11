@@ -4,16 +4,19 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { fetchAlbums } from "../redux/actions/action";
-
+import { fetchArtists } from "../redux/actions/action";
 import SongCard from "./Single";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import SecCard from "./SecCard";
 
 export default function MyCards() {
   const dispatch = useDispatch();
   const albumDisplay = useSelector((state) => state.getAlbums.albumList);
+  const artistDisplay = useSelector((state) => state.getArtists.artistList);
   useEffect(() => {
     dispatch(fetchAlbums());
+    dispatch(fetchArtists());
   }, []);
   return (
     <div id="col-10" className="pl-5">
@@ -48,26 +51,22 @@ export default function MyCards() {
           </div>
         </div>
       </div>
-      {/*Loading*/}
-      <div id="loading" className="d-flex justify-content-center">
-        <div
-          className="spinner-border"
-          style={{ width: "5rem", height: "5rem" }}
-          role="status"
-        >
-          <span className="sr-only">Loading...</span>
-        </div>
-      </div>
+
       {/*Cards*/}
-      <div className="row mt-3 scrollit">
+      <div className="row mt-5 scrollit">
         <div className="row" id="cardstart">
-          <h3 className="col-12 mb-4">Good Morning</h3>
-          <div className="col-3">
-            <a href="/#">
-              {albumDisplay.map((song) => (
-                <SongCard song={song} />
-              ))}
-            </a>
+          <h3 className="col-12 mb-4 d-flex">Good Morning</h3>
+
+          {albumDisplay.slice(0, 8).map((song) => (
+            <SongCard song={song} />
+          ))}
+        </div>
+        <div className="row  mt-3" id="mainrow">
+          <h2 className="col-12 mb-4 d-flex">Recently Played</h2>
+          <div className="col-12 pl-3 row" id="firstAlbumRow">
+            {artistDisplay.slice(0, 6).map((artist) => (
+              <SecCard artist={artist} />
+            ))}
           </div>
         </div>
       </div>

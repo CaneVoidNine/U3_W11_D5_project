@@ -1,8 +1,15 @@
 const SongCard = ({ song }) => {
   return (
-    <div className="sidecards col-2">
-      <img className="col-4" src={song.album.cover} alt="" />
-      <p className="col-8 sidetext">{song.title}</p>
+    <div className="col-3">
+      <a href="/album">
+        <div className="sidecards col-2">
+          <img className="col-4" src={song?.album.cover_xl} alt={song?.title} />
+          <p className="col-8 sidetext">
+            {song?.artist.name} <br />
+            {song?.title}
+          </p>
+        </div>
+      </a>
     </div>
   );
 };
