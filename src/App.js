@@ -3,6 +3,7 @@ import Main from "./components/Main";
 import Search from "./components/Search";
 import Artist from "./components/Artist";
 import Album from "./components/Album";
+import "./App.css";
 function App() {
   return (
     <BrowserRouter>

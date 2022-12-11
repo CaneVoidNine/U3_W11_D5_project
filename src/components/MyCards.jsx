@@ -1,8 +1,3 @@
-import "../css/welcome.css";
-import React from "react";
-
-import "bootstrap/dist/css/bootstrap.min.css";
-
 import { fetchAlbums } from "../redux/actions/action";
 import { fetchArtists } from "../redux/actions/action";
 import SongCard from "./Single";
@@ -61,9 +56,9 @@ export default function MyCards() {
             <SongCard song={song} />
           ))}
         </div>
-        <div className="row  mt-3" id="mainrow">
+        <div className="row  my-3" id="mainrow">
           <h2 className="col-12 mb-4 d-flex">Recently Played</h2>
-          <div className="col-12 pl-3 row" id="firstAlbumRow">
+          <div className="col-12 pl-3 row " id="firstAlbumRow">
             {artistDisplay.slice(0, 6).map((artist) => (
               <SecCard artist={artist} />
             ))}
