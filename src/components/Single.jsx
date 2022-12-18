@@ -1,7 +1,7 @@
 const SongCard = ({ song }) => {
   return (
     <div className="col-3">
-      <a href="/album">
+      <a href={`/album/${song.album.id}`}>
         <div className="sidecards col-2">
           <img className="col-4" src={song?.album.cover_xl} alt={song?.title} />
           <p className="col-8 sidetext">

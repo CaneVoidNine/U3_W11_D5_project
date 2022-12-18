@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function SecCard({ artist }) {
   return (
     <div className="albumCard">
-      <Link to="/artist">
+      <Link to={`/artist/${artist.artist.id}`}>
         <img
           className="col-11"
           src={artist.artist.picture_big}

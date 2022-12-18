@@ -1,6 +1,25 @@
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "../css/album.css";
 export default function MyAlbum() {
+  const params = useParams();
+  const albumID = params.albumId;
+  const [albumData, setAlbumData] = useState();
+  const [tracklist, setTracklist] = useState();
+  useEffect(() => {
+    gettingAlbum();
+  }, []);
+  let gettingAlbum = async () => {
+    const response = await fetch(
+      `https://striveschool-api.herokuapp.com/api/deezer/album/${albumID}`
+    );
+    const album = await response.json();
+    console.log(album);
+    setAlbumData(album);
+    console.log(albumData);
+  };
   return (
     <div>
       {/* Content */}
@@ -37,35 +56,42 @@ export default function MyAlbum() {
         {/* Album Cover + Info */}
         <div className="row d-flex my-3">
           <div className="col-2 mt-2 d-flex align-items-end">
-            <img alt="Album Cover" className="albumCover" />
+            <img
+              src={albumData?.cover_xl}
+              alt="Album Cover"
+              className="albumCover"
+            />
           </div>
           <div className="col-10 d-flex align-items-end mt-2 text-white">
             <div className="d-flex flex-column">
               <div className="recordType text-uppercase">Album</div>
-              <h2 className="albumTitle">Bohemian</h2>
+              <h2 className="albumTitle">{albumData?.title}</h2>
               <div className="d-flex artistFullDiv">
                 <div className="artistImageDiv rounded-circle d-flex align-item-center justify-content-center">
                   <img
-                    src="https://image.shutterstock.com/mosaic_250/2780032/1770074666/stock-photo-head-shot-of-african-self-assured-executive-manager-portrait-successful-staff-member-company-1770074666.jpg"
+                    src={albumData?.cover_small}
                     alt="Profile Foto"
                     className="artistImg"
                   />
                 </div>
                 <div className="albumInfo d-flex align-items-center ml-1">
                   <div className="artist">
-                    <a href className="links">
-                      Artist
+                    <a
+                      href={`/artist/${albumData?.artist.id}`}
+                      className="links"
+                    >
+                      {albumData?.artist?.name}
                     </a>
                   </div>
                   <div className="separaterDot">
                     <i className="bi bi-dot" />
                   </div>
-                  <div className="releaseYear">2022</div>
+                  <div className="releaseYear">{albumData?.release_date}</div>
                   <div className="separaterDot">
                     <i className="bi bi-dot" />
                   </div>
                   <div className="quantityDuration pr-4">
-                    4 songs, 3 hr 14 min
+                    {albumData?.duration}
                   </div>
                 </div>
               </div>
@@ -112,30 +138,48 @@ export default function MyAlbum() {
                   1
                 </th>
                 <td className="d-flex flex-column">
-                  <div className="tableTitle">20th Century Fox Fanture</div>
-                  <div className="tableArtist">Queen</div>
+                  <div className="tableTitle">
+                    {albumData?.tracks?.data[0]?.title}
+                  </div>
+                  <div className="tableArtist">
+                    {albumData?.tracks?.data[0]?.artist?.name}
+                  </div>
                 </td>
-                <td className="text-right pr-5">0:25</td>
+                <td className="text-right pr-5">
+                  {albumData?.tracks?.data[0]?.duration}
+                </td>
               </tr>
               <tr>
                 <th className="thMinWidth" scope="row">
                   2
                 </th>
                 <td className="d-flex flex-column">
-                  <div className="tableTitle">Somebody To Love</div>
-                  <div className="tableArtist">Queen</div>
+                  <div className="tableTitle">
+                    {albumData?.tracks?.data[1]?.title}
+                  </div>
+                  <div className="tableArtist">
+                    {albumData?.tracks?.data[1]?.artist?.name}
+                  </div>
                 </td>
-                <td className="text-right pr-5">4:55</td>
+                <td className="text-right pr-5">
+                  {albumData?.tracks?.data[1]?.duration}
+                </td>
               </tr>
               <tr>
                 <th className="thMinWidth" scope="row">
                   3
                 </th>
                 <td className="d-flex flex-column">
-                  <div className="tableTitle">Doing All Right - Revisited</div>
-                  <div className="tableArtist">Queen</div>
+                  <div className="tableTitle">
+                    {albumData?.tracks?.data[2]?.title}
+                  </div>
+                  <div className="tableArtist">
+                    {albumData?.tracks?.data[2]?.artist?.name}
+                  </div>
                 </td>
-                <td className="text-right pr-5">3:16</td>
+                <td className="text-right pr-5">
+                  {albumData?.tracks?.data[2]?.duration}
+                </td>
               </tr>
             </tbody>
           </table>

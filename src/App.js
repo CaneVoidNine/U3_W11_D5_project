@@ -10,8 +10,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/artist" element={<Artist />} />
-        <Route path="/album" element={<Album />} />
+        <Route path="/artist/:artistId" element={<Artist />} />
+        <Route path="/album/:albumId" element={<Album />} />
       </Routes>
     </BrowserRouter>
   );
