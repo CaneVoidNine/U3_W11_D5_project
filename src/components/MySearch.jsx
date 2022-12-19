@@ -1,6 +1,37 @@
 import React from "react";
 import "../css/search.css";
+import { useState } from "react";
+import { Col, Form } from "react-bootstrap";
+
+import Searching from "./Searching";
 export default function MySearch() {
+  const [query, setQuery] = useState("");
+  const [songs, setSongs] = useState([]);
+
+  const baseEndpoint =
+    "https://striveschool-api.herokuapp.com/api/deezer/search?q=";
+
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+    console.log(query);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(baseEndpoint + query + "&limit=20");
+      if (response.ok) {
+        const { data } = await response.json();
+        setSongs(data);
+        console.log(songs);
+      } else {
+        alert("Error fetching results");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="contentDiv px-2">
       <div className="row-fluid">
@@ -14,22 +45,22 @@ export default function MySearch() {
               <i className="bi bi-chevron-right fa-3x" />
             </div>
             <div className="input-group d-flex justify-content-start">
-              <div className="input-group-prepend">
-                <span className="input-group-text searchIconBar">
-                  <i className="bi bi-search" />
-                </span>
-              </div>
-              <input
-                type="text"
-                className="form-control searchBarInput"
-                aria-label="Amount (to the nearest dollar)"
-                placeholder="Search for music"
-              />
-              <div className="input-group-append">
-                <span className="input-group-text xIconBar">
-                  <i className="bi bi-x-lg" />
-                </span>
-              </div>
+              <div className="input-group-prepend"></div>
+              <Form onSubmit={handleSubmit}>
+                <Form.Control
+                  type="search"
+                  value={query}
+                  onChange={handleChange}
+                  placeholder="Search for songs"
+                  style={{
+                    color: "white",
+                    backgroundColor: "black",
+                    minWidth: "380px",
+                    borderRadius: "20px",
+                  }}
+                />
+              </Form>
+              <div className="input-group-append"></div>
             </div>
           </div>
           {/* Account Info */}
@@ -52,7 +83,7 @@ export default function MySearch() {
           </div>
         </div>
         <div className="row">
-          <div className="col-12 mt-3 d-flex">
+          <div className="col-12 mt-3 mb-3 d-flex">
             <div className="options rounded-pill px-3 py-1 text-white mr-2 d-flex align-self-center justify-content-center activeOption">
               All
             </div>
@@ -94,7 +125,18 @@ export default function MySearch() {
               </th>
             </tr>
           </thead>
-          <tbody id="albumTable" className="scrollit" />
+          <tbody id="albumTable" className="scrollit">
+            <Col xs={10} className="mx-auto mb-5">
+              {songs.map((obj, i) => (
+                <Searching
+                  key={i}
+                  i={i}
+                  data={obj}
+                  cover={obj.album.cover_xl}
+                />
+              ))}
+            </Col>
+          </tbody>
         </table>
       </div>
     </div>
